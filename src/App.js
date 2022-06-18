@@ -4,7 +4,14 @@ import contactsList from "./contacts.json";
 import { useState } from "react";
 
 function App() {
-  const [contacts, setContacts] = useState(contactsList.slice(0, 5));
+
+  const [contacts, setContacts] = useState(contactsList.slice(0, 5))
+  
+  const randomButton = () => {
+    let randomContact = Math.floor(Math.random() * contacts.length)
+    let randomButton = contacts[randomContact]
+    setContacts([randomButton, ...contacts])
+  }
 
   function handleSortByPopularity() {
     let contactsCopy = [...contacts];
@@ -28,6 +35,7 @@ function App() {
       <div className="buttons">
         <button onClick={() => handleSortByPopularity()}>Sort by popularity</button>
         <button onClick={() => handleSortByName()}>Sort by name</button>
+<button onClick={randomButton}>Add random Contact</button>
       </div>
       <table className="table">
         <thead>
