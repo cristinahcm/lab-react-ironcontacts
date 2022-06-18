@@ -8,8 +8,8 @@ function App() {
   const [contacts, setContacts] = useState(contactsList.slice(0, 5))
   
   const randomButton = () => {
-    let randomContact = Math.floor(Math.random() * contacts.length)
-    let randomButton = contacts[randomContact]
+    let randomContact = Math.floor(Math.random() * contactsList.length)
+    let randomButton = contactsList[randomContact]
     setContacts([randomButton, ...contacts])
   }
 
@@ -29,13 +29,22 @@ function App() {
     setContacts(contactsByName);
   }
 
+  const deleteContact = (contactId) => {
+    const filteredContact = contacts.filter((contact) => {
+      return contact.id !== contactId;
+  });
+    setContacts(filteredContact)
+};
+
   return (
     <div className="App">
       <h1>Iron Contacts</h1>
       <div className="buttons">
-        <button onClick={() => handleSortByPopularity()}>Sort by popularity</button>
-        <button onClick={() => handleSortByName()}>Sort by name</button>
-<button onClick={randomButton}>Add random Contact</button>
+      <div className="btn-group">
+        <button className="btn btn-outline-dark" onClick={() => handleSortByPopularity()}>Sort by popularity</button>
+        <button className="btn btn-outline-dark" onClick={() => handleSortByName()}>Sort by name</button>
+        </div>
+<button className="btn btn-outline-dark" onClick={randomButton}>Add random Contact</button>
       </div>
       <table className="table">
         <thead>
@@ -61,6 +70,9 @@ function App() {
               <td>{contact.popularity.toFixed(2)}</td>
               <td>{contact.wonOscar ? <p>🏆</p> : <p></p>}</td>
               <td>{contact.wonEmmy ? <p>🏅</p> : <p></p>}</td>
+              <button onClick={() => deleteContact(contact.id)} className="btn-delete">
+                    Delete
+              </button>
             </tr>
           ))}
         </tbody>
